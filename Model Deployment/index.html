@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, textarea { width: 80%; margin: 10px; padding: 10px; }
+        button { padding: 10px 20px; cursor: pointer; }
+        .result { margin-top: 20px; font-size: 20px; font-weight: bold; }
+    </style>
+    <script>
+        // Clear previous results when the page is reloaded
+        window.onload = function() {
+            if (performance.navigation.type === 1) {
+                document.getElementById("prediction-result").innerHTML = "";
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Fake News Detection</h1>
+    <form action="/predict" method="post">
+        <input type="text" name="news_heading" placeholder="Enter News Heading" required><br>
+        <textarea name="news_summary" placeholder="Enter News Summary" rows="4" required></textarea><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="prediction-result">
+        {% if prediction %}
+            <div class="result">
+                <p>Prediction: {{ prediction }}</p>
+                <p>Confidence: {{ confidence }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
